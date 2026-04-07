@@ -6,11 +6,15 @@ class CartBar extends StatelessWidget {
   const CartBar({
     super.key,
     required this.thumbnailAsset,
-    this.itemCount = 1,
+    this.itemCount = 0,
+    this.onIncrement,
+    this.onDecrement,
   });
 
   final String thumbnailAsset;
   final int itemCount;
+  final VoidCallback? onIncrement;
+  final VoidCallback? onDecrement;
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +42,17 @@ class CartBar extends StatelessWidget {
                 backgroundColor: Colors.white,
                 backgroundImage: AssetImage(thumbnailAsset),
               ),
-              const SizedBox(width: 14),
+              const SizedBox(width: 8),
+              if (onDecrement != null)
+                IconButton.filled(
+                  style: IconButton.styleFrom(
+                    backgroundColor: const Color(0xFFE8E8EA),
+                    foregroundColor: const Color(0xFF1A1A1A),
+                  ),
+                  onPressed: onDecrement,
+                  icon: const Icon(Icons.remove, size: 20),
+                ),
+              const SizedBox(width: 6),
               Container(
                 width: 36,
                 height: 36,
@@ -56,6 +70,17 @@ class CartBar extends StatelessWidget {
                   ),
                 ),
               ),
+              if (onIncrement != null) ...[
+                const SizedBox(width: 6),
+                IconButton.filled(
+                  style: IconButton.styleFrom(
+                    backgroundColor: const Color(0xFF4CAF50),
+                    foregroundColor: Colors.white,
+                  ),
+                  onPressed: onIncrement,
+                  icon: const Icon(Icons.add, size: 20),
+                ),
+              ],
             ],
           ),
         ),
