@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../components/cart_bar.dart';
 import '../components/product_card.dart';
 import '../components/store_app_bar.dart';
 import '../models/product.dart';
+import '../providers/counter_notifier.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final thumb = kDemoProducts.first.imageAsset;
+    final itemCount = ref.watch(counterProvider);
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -39,7 +42,12 @@ class HomeScreen extends StatelessWidget {
               },
             ),
           ),
-          CartBar(thumbnailAsset: thumb, itemCount: 1),
+          CartBar(
+            thumbnailAsset: thumb,
+            itemCount: itemCount,
+            onIncrement: () => ref.read(counterProvider.notifier).increment(),
+            onDecrement: () => ref.read(counterProvider.notifier).decrement(),
+          ),
         ],
       ),
     );

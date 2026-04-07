@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../models/product.dart';
 import '../screens/home_screen.dart';
 import '../screens/product_detail_screen.dart';
 
+part 'app_router.g.dart';
+
 final GlobalKey<NavigatorState> rootNavigatorKey = GlobalKey<NavigatorState>();
 
-GoRouter createAppRouter() {
+/// アプリ全体の [GoRouter]。認証や他プロバイダに依存させる場合はここで `ref.watch` する。
+@Riverpod(keepAlive: true)
+GoRouter appRouter(Ref ref) {
   return GoRouter(
     navigatorKey: rootNavigatorKey,
     initialLocation: '/',

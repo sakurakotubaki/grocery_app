@@ -18,6 +18,7 @@ class ProductDetailScreen extends StatelessWidget {
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
+            title: Text(product.name),
             pinned: true,
             backgroundColor: Colors.white,
             elevation: 0,
